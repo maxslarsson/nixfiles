@@ -62,13 +62,35 @@
   };
 
   home.activation.configure-tide = lib.hm.dag.entryAfter ["writeBoundary"] ''
-    ${pkgs.fish}/bin/fish -c "tide configure --auto --style=Lean --prompt_colors='True color' --show_time='12-hour format' --lean_prompt_height='Two lines' --prompt_connection=Disconnected --prompt_spacing=Compact --icons='Few icons' --transient=No"
-'';
+    ${pkgs.fish}/bin/fish -c "tide configure --auto --style=Lean --prompt_colors='16 colors' --show_time='12-hour format' --lean_prompt_height='Two lines' --prompt_connection=Disconnected --prompt_spacing=Compact --icons='Few icons' --transient=No"
+  '';
 
   programs = {
+    ghostty = {
+      enable = true;
+      package = null;
+      enableFishIntegration = true;
+      settings = {
+        theme = "GruvboxDark";
+        font-size = 12;
+        keybind = [
+          "super+h=goto_split:left"
+          "super+j=goto_split:bottom"
+          "super+k=goto_split:top"
+          "super+l=goto_split:right"
+          "shift+enter=text:\\n"
+        ];
+        # command = "${pkgs.fish}/bin/fish --login --interactive";
+      };
+    };
     fish = {
       enable = true;
+      interactiveShellInit = ''
+        set fish_greeting # Disable greeting
+        set -g fish_key_bindings fish_vi_key_bindings
+      '';
       shellAliases = {
+        c = "clear";
         l = "ls -alh";
         v = "nvim";
         gg = "lazygit";
@@ -79,6 +101,8 @@
         { name = "tide"; src = pkgs.fishPlugins.tide.src; }
         # Z dir jumping
         { name = "z"; src = pkgs.fishPlugins.z.src; }
+        # Gruvbox theme
+        { name = "gruvbox"; src = pkgs.fishPlugins.gruvbox.src; }
       ];
     };
 
