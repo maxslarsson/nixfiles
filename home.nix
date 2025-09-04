@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, lib, pkgs, ... }:
 
 {
   # Home Manager needs a bit of information about you and the paths it should
@@ -29,6 +29,7 @@
   # environment.
   home.packages = [
     pkgs.nerd-fonts.jetbrains-mono
+    pkgs.lazygit
   ];
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
@@ -60,15 +61,30 @@
     # EDITOR = "nvim";
   };
 
+  home.activation.configure-tide = lib.hm.dag.entryAfter ["writeBoundary"] ''
+    ${pkgs.fish}/bin/fish -c "tide configure --auto --style=Lean --prompt_colors='True color' --show_time='12-hour format' --lean_prompt_height='Two lines' --prompt_connection=Disconnected --prompt_spacing=Compact --icons='Few icons' --transient=No"
+'';
+
   programs = {
     fish = {
       enable = true;
-      defaultEditor = true;
+      shellAliases = {
+        l = "ls -alh";
+        v = "nvim";
+        gg = "lazygit";
+        update = "home-manager switch --flake ~/dev/nixfiles";
+      };
+      plugins = [
+        # Prompt
+        { name = "tide"; src = pkgs.fishPlugins.tide.src; }
+        # Z dir jumping
+        { name = "z"; src = pkgs.fishPlugins.z.src; }
+      ];
     };
 
-    starship = {
+    neovim = {
       enable = true;
-      enableFishIntegration = true;
+      defaultEditor = true;
     };
 
     git = {
@@ -76,8 +92,6 @@
       userName = "Max Larsson";
       userEmail = "maxslarsson@gmail.com";
     };
-
-    
 
     # Let Home Manager install and manage itself.
     home-manager.enable = true;
