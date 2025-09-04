@@ -80,7 +80,7 @@
           "super+l=goto_split:right"
           "shift+enter=text:\\n"
         ];
-        # command = "${pkgs.fish}/bin/fish --login --interactive";
+        command = "${pkgs.fish}/bin/fish --interactive";
       };
     };
     fish = {
@@ -89,20 +89,25 @@
         set fish_greeting # Disable greeting
         set -g fish_key_bindings fish_vi_key_bindings
       '';
-      shellAliases = {
+      shellAbbrs = {
         c = "clear";
         l = "ls -alh";
         v = "nvim";
         gg = "lazygit";
-        update = "home-manager switch --flake ~/dev/nixfiles";
+        update = "home-manager switch --flake ${toString ./.}";
+      };
+      functions = {
+        mdcd = "mkdir -p $argv; and cd $argv[-1]";
       };
       plugins = [
+        # Gruvbox theme
+        { name = "gruvbox"; src = pkgs.fishPlugins.gruvbox.src; }
         # Prompt
         { name = "tide"; src = pkgs.fishPlugins.tide.src; }
         # Z dir jumping
         { name = "z"; src = pkgs.fishPlugins.z.src; }
-        # Gruvbox theme
-        { name = "gruvbox"; src = pkgs.fishPlugins.gruvbox.src; }
+        # FZF
+        { name = "fzf"; src = pkgs.fishPlugins.fzf-fish.src; }
       ];
     };
 
