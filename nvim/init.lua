@@ -115,6 +115,6 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 -- Setup lazy.nvim
-require("lazy").setup({})
+require("lazy").setup("plugins")
 
 -- vim: ts=2 sts=2 sw=2 et
