@@ -87,7 +87,9 @@
       enable = true;
       interactiveShellInit = ''
         set fish_greeting # Disable greeting
-        set -g fish_key_bindings fish_vi_key_bindings
+        set -g fish_key_bindings fish_vi_key_bindings # Enable VIM keybinds
+        set -g fish_color_command green
+        set -h fish_color_error red
       '';
       shellAbbrs = {
         c = "clear";
