@@ -1,10 +1,11 @@
 { config, lib, pkgs, ... }:
-
 {
   # Home Manager needs a bit of information about you and the paths it should
   # manage.
-  home.username = "maxlarsson";
-  home.homeDirectory = "/Users/maxlarsson";
+  home = {
+    username = "maxlarsson";
+    homeDirectory = "/Users/maxlarsson";
+  };
 
   # This value determines the Home Manager release that your configuration is
   # compatible with. This helps avoid breakage when a new Home Manager release
@@ -22,18 +23,37 @@
         source = ./nvim;
         recursive = true;
       };
+
+      # Configure the `tide` Fish prompt
+      "fish/conf.d/tide-overrides.fish".text = ''
+        # Time: show + 12-hour format
+        set -g tide_show_time yes
+        set -g tide_time_format '%I:%M'
+
+        # Lean prompt height: two lines
+        set -g tide_lean_prompt_height 2
+
+        # Prompt connection & spacing
+        set -g tide_prompt_connection disconnected
+        set -g tide_prompt_spacing compact
+
+        # Icons: few
+        set -g tide_prompt_icon_strategy few
+
+        # Transient prompt: off
+        set -g tide_left_prompt_transient no
+      '';
     };
   };
 
-  # The home.packages option allows you to install Nix packages into your
-  # environment.
-  home.packages = [
-    pkgs.nerd-fonts.jetbrains-mono
-  ];
+  fonts.fontconfig.enable = true;
+  home.packages = with pkgs; [
+    nerd-fonts.jetbrains-mono
 
-  home.activation.configure-tide = lib.hm.dag.entryAfter ["writeBoundary"] ''
-    ${pkgs.fish}/bin/fish -c "tide configure --auto --style=Lean --prompt_colors='16 colors' --show_time='12-hour format' --lean_prompt_height='Two lines' --prompt_connection=Disconnected --prompt_spacing=Compact --icons='Few icons' --transient=No"
-  '';
+    # Mac specific
+    raycast
+    rectangle
+  ];
 
   programs = {
     ghostty = {
@@ -42,6 +62,7 @@
       enableFishIntegration = true;
       settings = {
         theme = "GruvboxDark";
+        font-family = "JetBrainsMono Nerd Font Mono";
         font-size = 12;
         keybind = [
           "super+h=goto_split:left"
@@ -59,27 +80,33 @@
         set fish_greeting # Disable greeting
         set -g fish_key_bindings fish_vi_key_bindings # Enable VIM keybinds
         set -g fish_color_command green
-        set -h fish_color_error red
+        set -g fish_color_error red
       '';
       shellAbbrs = {
         c = "clear";
         l = "ls -alh";
         v = "nvim";
         gg = "lazygit";
-        update = "home-manager switch --flake ${toString ./.}";
       };
       functions = {
         mdcd = "mkdir -p $argv; and cd $argv[-1]";
+        update = ''
+          if type -q darwin-rebuild
+            sudo darwin-rebuild switch --flake $HOME/dev/nixfiles
+          else
+            home-manager switch --flake $HOME/dev/nixfiles
+          end
+        '';
       };
-      plugins = [
+      plugins = with pkgs.fishPlugins; [
         # Gruvbox theme
-        { name = "gruvbox"; src = pkgs.fishPlugins.gruvbox.src; }
+        { name = "gruvbox"; src = gruvbox.src; }
         # Prompt
-        { name = "tide"; src = pkgs.fishPlugins.tide.src; }
+        { name = "tide"; src = tide.src; }
         # Z dir jumping
-        { name = "z"; src = pkgs.fishPlugins.z.src; }
+        { name = "z"; src = z.src; }
         # FZF
-        { name = "fzf"; src = pkgs.fishPlugins.fzf-fish.src; }
+        { name = "fzf"; src = fzf-fish.src; }
       ];
     };
 
@@ -94,9 +121,29 @@
       userEmail = "maxslarsson@gmail.com";
     };
 
+    firefox = {
+      enable = true;
+      package = pkgs.firefox-devedition;
+      policies = {
+        ExtensionSettings = {
+          "*".installation_mode = "blocked"; # blocks all addons except the ones specified below
+          "uBlock0@raymondhill.net" = {
+            install_url = "https://addons.mozilla.org/firefox/downloads/latest/ublock-origin/latest.xpi";
+            installation_mode = "force_installed";
+          };
+          # ClearURLs
+          "{74145f27-f039-47ce-a470-a662b129930a}" = {
+            install_url = "https://addons.mozilla.org/firefox/downloads/latest/clearurls/latest.xpi";
+            installation_mode = "force_installed";
+          };
+        };
+      };
+    };
+
     lazygit.enable = true;
     ripgrep.enable = true;
     fd.enable = true;
+    fzf.enable = true;
 
     # Let Home Manager install and manage itself.
     home-manager.enable = true;
