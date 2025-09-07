@@ -144,6 +144,7 @@
     ripgrep.enable = true;
     fd.enable = true;
     fzf.enable = true;
+    bat.enable = true;
 
     # Let Home Manager install and manage itself.
     home-manager.enable = true;
