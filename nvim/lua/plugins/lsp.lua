@@ -41,7 +41,7 @@ return {
           -- or a suggestion from your LSP for this to activate.
           map('<leader>ca', vim.lsp.buf.code_action, '[C]ode [A]ction', { 'n', 'x' })
 
-	  local tb = require('telescope.builtin')
+          local tb = require('telescope.builtin')
           map('gr', tb.lsp_references, '[G]oto [R]eferences')
           map('gi', tb.lsp_implementations, '[G]oto [I]mplementation')
           map('gd', tb.lsp_definitions, '[G]oto [D]efinition')
@@ -141,6 +141,7 @@ return {
         basedpyright = {},
         rust_analyzer = {},
         vtsls = {},
+        nil_ls = {},
 
         lua_ls = {
           settings = {
@@ -158,7 +159,7 @@ return {
       -- Setup each server manually
       local lspconfig = require('lspconfig')
       for name, opts in pairs(servers) do
-        opts.capabilities = vim.tbl_deep_extend('force', {}, capabilities, opts.capabilities)
+        opts.capabilities = vim.tbl_deep_extend('force', {}, capabilities, opts.capabilities or {})
         lspconfig[name].setup(opts)
       end
     end,
