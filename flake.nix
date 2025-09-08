@@ -72,5 +72,12 @@
         # Optionally use extraSpecialArgs
         # to pass through arguments to home.nix
       };
+
+      devShells.${system}.default = pkgs.mkShell {
+        buildInputs = with pkgs; [
+          lua-language-server
+          nil
+        ];
+      };
     };
 }
