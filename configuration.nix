@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, ... }:
 {
   # Because I am using Determinate Nixd
   nix.enable = false;
