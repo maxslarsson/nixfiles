@@ -59,6 +59,7 @@
   home.packages = with pkgs; [
     nerd-fonts.jetbrains-mono
     nil
+    nixfmt-rfc-style
 
     # GUI apps
     slack
