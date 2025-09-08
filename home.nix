@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ... }:
+{ config, pkgs, ... }:
 {
   # Home Manager needs a bit of information about you and the paths it should
   # manage.
@@ -42,6 +42,15 @@
 
         # Transient prompt: off
         set -g tide_left_prompt_transient no
+      '';
+
+      "direnv/direnvrc".text = ''
+        direnv_layout_dir() {
+            local hash path
+            hash="$(sha1sum - <<< "$PWD" | head -c40)"
+            path="''${PWD//[^a-zA-Z0-9]/-}"
+            echo "${config.xdg.cacheHome}/direnv/layouts/''${hash}''${path}"
+        }
       '';
     };
   };
@@ -117,6 +126,7 @@
     direnv = {
       enable = true;
       nix-direnv.enable = true;
+
     };
 
     neovim = {
