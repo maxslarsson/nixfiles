@@ -50,6 +50,9 @@
   home.packages = with pkgs; [
     nerd-fonts.jetbrains-mono
 
+    # GUI apps
+    slack
+
     # Mac specific
     raycast
     rectangle
@@ -74,6 +77,7 @@
         command = "${pkgs.fish}/bin/fish --interactive";
       };
     };
+
     fish = {
       enable = true;
       interactiveShellInit = ''
@@ -108,6 +112,11 @@
         # FZF
         { name = "fzf"; src = fzf-fish.src; }
       ];
+    };
+
+    direnv = {
+      enable = true;
+      nix-direnv.enable = true;
     };
 
     neovim = {
