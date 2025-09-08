@@ -20,14 +20,25 @@
     ];
   };
 
-  system.defaults.dock = {
-    orientation = "right";
-    tilesize = 16;
-    autohide = true;
-    persistent-apps = [ ];
-    persistent-others = [ ];
-    show-process-indicators = false;
-    show-recents = false;
+  system.defaults = {
+    NSGlobalDomain = {
+      InitialKeyRepeat = 10;
+      KeyRepeat = 2;
+      ApplePressAndHoldEnabled = false;
+    };
+    screensaver = {
+      askForPassword = true;
+      askForPasswordDelay = 0; # 0 seconds = immediately
+    };
+    dock = {
+      orientation = "right";
+      tilesize = 16;
+      autohide = true;
+      persistent-apps = [ ];
+      persistent-others = [ ];
+      show-process-indicators = false;
+      show-recents = false;
+    };
   };
 
   # Enable Touch ID authentication for sudo
