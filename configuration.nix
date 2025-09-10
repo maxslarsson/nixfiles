@@ -22,8 +22,8 @@
 
   system.defaults = {
     NSGlobalDomain = {
-      InitialKeyRepeat = 15;
-      KeyRepeat = 5;
+      InitialKeyRepeat = 10;
+      KeyRepeat = 2;
       ApplePressAndHoldEnabled = false;
 
       AppleInterfaceStyle = "Dark";
