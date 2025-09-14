@@ -60,9 +60,13 @@
     nerd-fonts.jetbrains-mono
     nil
     nixfmt-rfc-style
+    (python3.withPackages (python-pkgs: with python-pkgs; [
+      ipython
+    ]))
 
     # GUI apps
     slack
+    zoom-us
 
     # Mac specific
     raycast
@@ -127,8 +131,8 @@
 
     direnv = {
       enable = true;
+      silent = true;
       nix-direnv.enable = true;
-
     };
 
     neovim = {
@@ -160,6 +164,11 @@
           # Vimium
           "{d7742d87-e61d-4b78-b8a1-b469842139fa}" = {
             install_url = "https://addons.mozilla.org/firefox/downloads/latest/vimium/latest.xpi";
+            installation_mode = "force_installed";
+          };
+          # iCloud Passwords
+          "password-manager-firefox-extension@apple.com" = {
+            install_url = "https://addons.mozilla.org/firefox/downloads/latest/icloud-passwords/latest.xpi";
             installation_mode = "force_installed";
           };
         };
