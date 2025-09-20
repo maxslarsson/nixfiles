@@ -142,6 +142,7 @@ return {
         rust_analyzer = {},
         vtsls = {},
         nil_ls = {},
+        ocamllsp = {},
 
         lua_ls = {
           settings = {
