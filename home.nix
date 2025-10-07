@@ -64,6 +64,7 @@
     nerd-fonts.jetbrains-mono
     nil
     nixfmt-rfc-style
+    ffmpeg
     (python3.withPackages (python-pkgs: with python-pkgs; [
       ipython
     ]))
