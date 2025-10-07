@@ -146,6 +146,7 @@
 
     git = {
       enable = true;
+      lfs.enable = true;
       userName = "Max Larsson";
       userEmail = "maxslarsson@gmail.com";
     };
