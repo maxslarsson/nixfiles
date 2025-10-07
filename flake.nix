@@ -25,7 +25,15 @@
   };
 
   outputs =
-    { self, nix-darwin, nixpkgs, home-manager, nix-homebrew, homebrew-core, homebrew-cask, ... }:
+    {
+      self,
+      nixpkgs,
+      nix-darwin,
+      home-manager,
+      nix-homebrew,
+      homebrew-core,
+      homebrew-cask,
+    }:
     let
       system = "aarch64-darwin";
       pkgs = nixpkgs.legacyPackages.${system};
@@ -34,7 +42,6 @@
       darwinConfigurations."Maxs-MacBook-Pro" = nix-darwin.lib.darwinSystem {
         modules = [
           nix-homebrew.darwinModules.nix-homebrew
-          home-manager.darwinModules.home-manager
           {
             # Set Git commit hash for darwin-version.
             system.configurationRevision = self.rev or self.dirtyRev or null;
@@ -51,10 +58,12 @@
                 "homebrew/homebrew-cask" = homebrew-cask;
               };
               mutableTaps = false;
-            }; 
+            };
 
           }
           ./configuration.nix
+
+          home-manager.darwinModules.home-manager
           {
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;

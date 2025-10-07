@@ -65,9 +65,11 @@
     nil
     nixfmt-rfc-style
     ffmpeg
-    (python3.withPackages (python-pkgs: with python-pkgs; [
-      ipython
-    ]))
+    (python3.withPackages (
+      python-pkgs: with python-pkgs; [
+        ipython
+      ]
+    ))
 
     # GUI apps
     slack
@@ -124,13 +126,25 @@
       };
       plugins = with pkgs.fishPlugins; [
         # Gruvbox theme
-        { name = "gruvbox"; src = gruvbox.src; }
+        {
+          name = "gruvbox";
+          src = gruvbox.src;
+        }
         # Prompt
-        { name = "tide"; src = tide.src; }
+        {
+          name = "tide";
+          src = tide.src;
+        }
         # Z dir jumping
-        { name = "z"; src = z.src; }
+        {
+          name = "z";
+          src = z.src;
+        }
         # FZF
-        { name = "fzf"; src = fzf-fish.src; }
+        {
+          name = "fzf";
+          src = fzf-fish.src;
+        }
       ];
     };
 
