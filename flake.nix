@@ -35,8 +35,20 @@
       homebrew-cask,
     }:
     let
-      system = "aarch64-darwin";
-      pkgs = nixpkgs.legacyPackages.${system};
+      supportedSystems = [
+        "x86_64-linux"
+        "aarch64-linux"
+        "x86_64-darwin"
+        "aarch64-darwin"
+      ];
+      forEachSupportedSystem =
+        f:
+        nixpkgs.lib.genAttrs supportedSystems (
+          system:
+          f {
+            pkgs = import nixpkgs { inherit system; };
+          }
+        );
     in
     {
       darwinConfigurations."Maxs-MacBook-Pro" = nix-darwin.lib.darwinSystem {
@@ -47,7 +59,7 @@
             system.configurationRevision = self.rev or self.dirtyRev or null;
 
             # The platform the configuration will be used on.
-            nixpkgs.hostPlatform = system;
+            nixpkgs.hostPlatform = "aarch64-darwin";
             nixpkgs.config.allowUnfree = true;
 
             nix-homebrew = {
@@ -71,8 +83,9 @@
           }
         ];
       };
+
       homeConfigurations."maxlarsson" = home-manager.lib.homeManagerConfiguration {
-        inherit pkgs;
+        pkgs = nixpkgs.legacyPackages.aarch64-darwin;
 
         # Specify your home configuration modules here, for example,
         # the path to your home.nix.
@@ -82,10 +95,15 @@
         # to pass through arguments to home.nix
       };
 
-      devShells.${system}.default = pkgs.mkShell {
-        buildInputs = with pkgs; [
-          lua-language-server
-        ];
-      };
+      devShells = forEachSupportedSystem (
+        { pkgs }:
+        {
+          default = pkgs.mkShell {
+            packages = with pkgs; [
+              lua-language-server
+            ];
+          };
+        }
+      );
     };
 }

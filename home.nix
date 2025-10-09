@@ -61,9 +61,11 @@
 
   fonts.fontconfig.enable = true;
   home.packages = with pkgs; [
-    nerd-fonts.jetbrains-mono
-    nil
+    nixd
     nixfmt-rfc-style
+    vulnix
+
+    nerd-fonts.jetbrains-mono
     ffmpeg
     (python3.withPackages (
       python-pkgs: with python-pkgs; [
@@ -74,6 +76,7 @@
     # GUI apps
     slack
     zoom-us
+    vscode
 
     # Mac specific
     raycast

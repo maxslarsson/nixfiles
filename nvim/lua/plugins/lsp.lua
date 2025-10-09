@@ -141,7 +141,7 @@ return {
         basedpyright = {},
         rust_analyzer = {},
         vtsls = {},
-        nil_ls = {},
+        nixd = {},
         ocamllsp = {},
 
         lua_ls = {
