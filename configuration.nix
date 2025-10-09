@@ -1,7 +1,8 @@
-{ config, ... }:
+{ config, inputs, ... }:
 {
   # Because I am using Determinate Nixd
   nix.enable = false;
+  nix.nixPath = [ "nixpkgs=${inputs.nixpkgs}" ];
 
   # Used for backwards compatibility, read the changelog before changing
   system.stateVersion = 6;
