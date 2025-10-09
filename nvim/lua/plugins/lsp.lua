@@ -116,7 +116,7 @@ return {
             [vim.diagnostic.severity.INFO] = '󰋽 ',
             [vim.diagnostic.severity.HINT] = '󰌶 ',
           },
-        }, 
+        },
         virtual_text = {
           source = 'if_many',
           spacing = 2,
@@ -147,9 +147,9 @@ return {
         lua_ls = {
           settings = {
             Lua = {
-              completion = {
-                callSnippet = 'Replace',
-              },
+              -- completion = {
+              --   callSnippet = 'Replace',
+              -- },
               -- You can toggle below to ignore Lua_LS's noisy `missing-fields` warnings
               -- diagnostics = { disable = { 'missing-fields' } },
             },
@@ -166,4 +166,3 @@ return {
     end,
   },
 }
-
