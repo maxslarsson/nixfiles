@@ -12,14 +12,6 @@
     home = "/Users/maxlarsson";
   };
 
-  homebrew = {
-    enable = true;
-    taps = builtins.attrNames (config.nix-homebrew.taps);
-    casks = [
-      "ghostty" # This is only required since the nixpkgs.ghostty is broken on Darwin
-    ];
-  };
-
   system.defaults = {
     NSGlobalDomain = {
       InitialKeyRepeat = 10;

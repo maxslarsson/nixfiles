@@ -11,17 +11,6 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-
-    nix-homebrew.url = "github:zhaofengli/nix-homebrew";
-    # Optional: Declarative tap management
-    homebrew-core = {
-      url = "github:homebrew/homebrew-core";
-      flake = false;
-    };
-    homebrew-cask = {
-      url = "github:homebrew/homebrew-cask";
-      flake = false;
-    };
   };
 
   outputs =
@@ -30,9 +19,6 @@
       nixpkgs,
       nix-darwin,
       home-manager,
-      nix-homebrew,
-      homebrew-core,
-      homebrew-cask,
     }:
     let
       supportedSystems = [
@@ -53,7 +39,6 @@
     {
       darwinConfigurations."Maxs-MacBook-Pro" = nix-darwin.lib.darwinSystem {
         modules = [
-          nix-homebrew.darwinModules.nix-homebrew
           {
             # Set Git commit hash for darwin-version.
             system.configurationRevision = self.rev or self.dirtyRev or null;
@@ -61,17 +46,6 @@
             # The platform the configuration will be used on.
             nixpkgs.hostPlatform = "aarch64-darwin";
             nixpkgs.config.allowUnfree = true;
-
-            nix-homebrew = {
-              enable = true;
-              user = "maxlarsson";
-              taps = {
-                "homebrew/homebrew-core" = homebrew-core;
-                "homebrew/homebrew-cask" = homebrew-cask;
-              };
-              mutableTaps = false;
-            };
-
           }
           ./configuration.nix
 

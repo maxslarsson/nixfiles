@@ -89,7 +89,7 @@
       package = null;
       enableFishIntegration = true;
       settings = {
-        theme = "GruvboxDark";
+        theme = "Gruvbox Dark";
         font-family = "JetBrainsMono Nerd Font Mono";
         font-size = 12;
         keybind = [
