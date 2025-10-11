@@ -100,6 +100,7 @@
           "shift+enter=text:\\n"
         ];
         command = "${pkgs.fish}/bin/fish --interactive";
+        macos-titlebar-style = "hidden";
       };
     };
 
