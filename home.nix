@@ -101,6 +101,7 @@
         ];
         command = "${pkgs.fish}/bin/fish --interactive";
         macos-titlebar-style = "hidden";
+        window-padding-color = "extend-always";
       };
     };
 
