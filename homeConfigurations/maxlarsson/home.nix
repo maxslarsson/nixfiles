@@ -172,6 +172,15 @@
       userName = "Max Larsson";
       userEmail = "maxslarsson@gmail.com";
 
+      ignores = [
+        ".direnv"
+        ".envrc"
+        ".DS_Store"
+        "ehthumbs.db"
+        "Icon?"
+        "Thumbs.db"
+      ];
+
       extraConfig = {
         rerere = {
           enabled = true;
