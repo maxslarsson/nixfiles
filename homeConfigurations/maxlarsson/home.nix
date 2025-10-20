@@ -67,6 +67,7 @@
 
     nerd-fonts.jetbrains-mono
     ffmpeg
+    claude-code
     (python3.withPackages (
       python-pkgs: with python-pkgs; [
         ipython
@@ -78,15 +79,16 @@
     zoom-us
     vscode
 
+    # TODO: Move this to be customizable (not all uses will be on Mac)
     # Mac specific
     raycast
-    rectangle
+    rectangle 
   ];
 
   programs = {
     ghostty = {
       enable = true;
-      package = null;
+      package = null; # TODO: Enable when ghostty can be built on Mac
       enableFishIntegration = true;
       settings = {
         theme = "Gruvbox Dark";
@@ -169,6 +171,16 @@
       lfs.enable = true;
       userName = "Max Larsson";
       userEmail = "maxslarsson@gmail.com";
+
+      extraConfig = {
+        rerere = {
+          enabled = true;
+          autoupdate = true;  # Optional: automatically stage resolved conflicts
+        };
+
+        pull.rebase = true;
+        rebase.autoStash = true;
+      };
     };
 
     firefox = {
