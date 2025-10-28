@@ -169,8 +169,20 @@
     git = {
       enable = true;
       lfs.enable = true;
-      userName = "Max Larsson";
-      userEmail = "maxslarsson@gmail.com";
+
+
+      settings = {
+        user = {
+          name = "Max Larsson";
+          email = "maxslarsson@gmail.com";
+        };
+        pull.rebase = true;
+        rebase.autoStash = true;
+        rerere = {
+          enabled = true;
+          autoupdate = true;  # Optional: automatically stage resolved conflicts
+        };
+      };
 
       ignores = [
         ".direnv"
@@ -180,16 +192,6 @@
         "Icon?"
         "Thumbs.db"
       ];
-
-      extraConfig = {
-        rerere = {
-          enabled = true;
-          autoupdate = true;  # Optional: automatically stage resolved conflicts
-        };
-
-        pull.rebase = true;
-        rebase.autoStash = true;
-      };
     };
 
     firefox = {
