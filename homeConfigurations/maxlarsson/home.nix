@@ -184,7 +184,6 @@
       };
 
       ignores = [
-        "result"
         ".direnv"
         ".envrc"
         ".DS_Store"
