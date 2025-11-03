@@ -170,7 +170,6 @@
       enable = true;
       lfs.enable = true;
 
-
       settings = {
         user = {
           name = "Max Larsson";
@@ -185,6 +184,7 @@
       };
 
       ignores = [
+        "result"
         ".direnv"
         ".envrc"
         ".DS_Store"
