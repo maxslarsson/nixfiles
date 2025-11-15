@@ -61,6 +61,7 @@
 
   fonts.fontconfig.enable = true;
   home.packages = with pkgs; [
+    nh
     nixd
     nixfmt-rfc-style
     vulnix
@@ -73,16 +74,6 @@
         ipython
       ]
     ))
-
-    # GUI apps
-    slack
-    zoom-us
-    vscode
-
-    # TODO: Move this to be customizable (not all uses will be on Mac)
-    # Mac specific
-    raycast
-    rectangle 
   ];
 
   programs = {
@@ -180,7 +171,7 @@
         rebase.autoStash = true;
         rerere = {
           enabled = true;
-          autoupdate = true;  # Optional: automatically stage resolved conflicts
+          autoupdate = true; # Optional: automatically stage resolved conflicts
         };
       };
 
