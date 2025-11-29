@@ -1,9 +1,5 @@
-{ self, config, home-manager, ... }:
+{ config, ... }:
 {
-  imports = [
-    home-manager.darwinModules.home-manager
-  ];
-
   # Because I am using Determinate Nixd
   nix.enable = false;
   nixpkgs.config.allowUnfree = true;
@@ -11,15 +7,11 @@
   # Used for backwards compatibility, read the changelog before changing
   system.stateVersion = 6;
 
-  # Set Git commit hash for darwin-version.
-  system.configurationRevision = self.rev or self.dirtyRev or null;
-
   system.primaryUser = "maxlarsson";
   users.users.maxlarsson = {
     name = "maxlarsson";
     home = "/Users/maxlarsson";
   };
-  home-manager.users.maxlarsson = import ../../homeConfigurations/maxlarsson/home.nix;
 
   # Enable Touch ID authentication for sudo
   security.pam.services.sudo_local.touchIdAuth = true;
