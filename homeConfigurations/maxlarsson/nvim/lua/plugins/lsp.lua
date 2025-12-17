@@ -136,6 +136,8 @@ return {
 
       -- Enable the following language servers
       local servers = {
+        zls = {},
+        ocamllsp = {},
         clangd = {},
         gopls = {},
         basedpyright = {},
@@ -164,7 +166,6 @@ return {
             },
           }
         },
-        ocamllsp = {},
 
         lua_ls = {
           settings = {
