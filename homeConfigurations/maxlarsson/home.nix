@@ -185,34 +185,34 @@
       ];
     };
 
-    firefox = {
-      enable = true;
-      package = pkgs.firefox-devedition;
-      policies = {
-        ExtensionSettings = {
-          "*".installation_mode = "blocked"; # blocks all addons except the ones specified below
-          "uBlock0@raymondhill.net" = {
-            install_url = "https://addons.mozilla.org/firefox/downloads/latest/ublock-origin/latest.xpi";
-            installation_mode = "force_installed";
-          };
-          # ClearURLs
-          "{74145f27-f039-47ce-a470-a662b129930a}" = {
-            install_url = "https://addons.mozilla.org/firefox/downloads/latest/clearurls/latest.xpi";
-            installation_mode = "force_installed";
-          };
-          # Vimium
-          "{d7742d87-e61d-4b78-b8a1-b469842139fa}" = {
-            install_url = "https://addons.mozilla.org/firefox/downloads/latest/vimium/latest.xpi";
-            installation_mode = "force_installed";
-          };
-          # iCloud Passwords
-          "password-manager-firefox-extension@apple.com" = {
-            install_url = "https://addons.mozilla.org/firefox/downloads/latest/icloud-passwords/latest.xpi";
-            installation_mode = "force_installed";
-          };
-        };
-      };
-    };
+    # firefox = {
+    #   enable = true;
+    #   package = pkgs.firefox-devedition;
+    #   policies = {
+    #     ExtensionSettings = {
+    #       "*".installation_mode = "blocked"; # blocks all addons except the ones specified below
+    #       "uBlock0@raymondhill.net" = {
+    #         install_url = "https://addons.mozilla.org/firefox/downloads/latest/ublock-origin/latest.xpi";
+    #         installation_mode = "force_installed";
+    #       };
+    #       # ClearURLs
+    #       "{74145f27-f039-47ce-a470-a662b129930a}" = {
+    #         install_url = "https://addons.mozilla.org/firefox/downloads/latest/clearurls/latest.xpi";
+    #         installation_mode = "force_installed";
+    #       };
+    #       # Vimium
+    #       "{d7742d87-e61d-4b78-b8a1-b469842139fa}" = {
+    #         install_url = "https://addons.mozilla.org/firefox/downloads/latest/vimium/latest.xpi";
+    #         installation_mode = "force_installed";
+    #       };
+    #       # iCloud Passwords
+    #       "password-manager-firefox-extension@apple.com" = {
+    #         install_url = "https://addons.mozilla.org/firefox/downloads/latest/icloud-passwords/latest.xpi";
+    #         installation_mode = "force_installed";
+    #       };
+    #     };
+    #   };
+    # };
 
     lazygit.enable = true;
     ripgrep.enable = true;
