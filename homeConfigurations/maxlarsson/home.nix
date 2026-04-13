@@ -64,10 +64,11 @@
     nh
     nixd
     nixfmt-rfc-style
-    vulnix
 
     nerd-fonts.jetbrains-mono
-    ffmpeg
+
+    tealdeer
+    gh
     claude-code
     (python3.withPackages (
       python-pkgs: with python-pkgs; [
