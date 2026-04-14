@@ -63,7 +63,7 @@
   home.packages = with pkgs; [
     nh
     nixd
-    nixfmt-rfc-style
+    nixfmt
 
     nerd-fonts.jetbrains-mono
 
@@ -158,6 +158,8 @@
     neovim = {
       enable = true;
       defaultEditor = true;
+      withPython3 = false;
+      withRuby = false;
     };
 
     git = {
