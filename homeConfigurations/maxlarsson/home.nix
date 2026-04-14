@@ -70,6 +70,7 @@
     tealdeer
     gh
     claude-code
+    nodejs
     (python3.withPackages (
       python-pkgs: with python-pkgs; [
         ipython
