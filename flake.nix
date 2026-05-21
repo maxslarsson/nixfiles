@@ -22,13 +22,6 @@
     }:
     let
       darwinHosts = builtins.attrNames (builtins.readDir ./darwinConfigurations);
-
-      mkHome =
-        system: name:
-        home-manager.lib.homeManagerConfiguration {
-          pkgs = nixpkgs.legacyPackages.${system};
-          modules = [ ./homeConfigurations/${name}/home.nix ];
-        };
     in
     {
       darwinConfigurations = nixpkgs.lib.genAttrs darwinHosts (
@@ -45,7 +38,7 @@
               # Set Git commit hash for darwin-version.
               system.configurationRevision = self.rev or self.dirtyRev or null;
 
-              home-manager.users.maxlarsson = import ./homeConfigurations/maxlarsson/home.nix;
+              home-manager.users.maxlarsson = import ./home-configurations/maxlarsson/home.nix;
             }
 
             ./darwinConfigurations/${darwinHost}/configuration.nix
@@ -53,10 +46,7 @@
         }
       );
 
-      homeConfigurations = {
-        maxlarsson = mkHome "aarch64-darwin" "maxlarsson";
-        mlarsson = mkHome "x86_64-linux" "mlarsson";
-      };
+      homeConfigurations = import ./home-configurations inputs;
 
       devShells = import ./dev-shells inputs;
     };
