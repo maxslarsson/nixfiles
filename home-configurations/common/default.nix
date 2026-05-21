@@ -56,6 +56,7 @@
   home.packages = with pkgs; [
     nixd
     nixfmt
+    tree-sitter
 
     nerd-fonts.jetbrains-mono
 
