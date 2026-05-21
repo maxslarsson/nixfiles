@@ -2,15 +2,12 @@
   description = "maxslarsson Nix Files";
 
   inputs = {
-    # Use `github:NixOS/nixpkgs/nixpkgs-25.11-darwin` to use Nixpkgs 25.11.
-    nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
     nix-darwin = {
-      # Use `github:nix-darwin/nix-darwin/nix-darwin-25.11` to use Nixpkgs 25.11.
       url = "github:nix-darwin/nix-darwin/master";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     home-manager = {
-      # Use `github:nix-community/home-manager/release-25.11` to use HomeManager 25.11
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
@@ -41,7 +38,13 @@
         );
 
       darwinHosts = builtins.attrNames (builtins.readDir ./darwinConfigurations);
-      homeUsers = builtins.attrNames (builtins.readDir ./homeConfigurations);
+
+      mkHome =
+        system: name:
+        home-manager.lib.homeManagerConfiguration {
+          pkgs = nixpkgs.legacyPackages.${system};
+          modules = [ ./homeConfigurations/${name}/home.nix ];
+        };
     in
     {
       darwinConfigurations = nixpkgs.lib.genAttrs darwinHosts (
@@ -66,16 +69,10 @@
         }
       );
 
-      homeConfigurations = nixpkgs.lib.genAttrs homeUsers (
-        homeUser:
-        home-manager.lib.homeManagerConfiguration {
-          pkgs = nixpkgs.legacyPackages.aarch64-darwin; # TODO: Make this work on multiple systems
-
-          modules = [
-            ./homeConfigurations/${homeUser}/home.nix
-          ];
-        }
-      );
+      homeConfigurations = {
+        maxlarsson = mkHome "aarch64-darwin" "maxlarsson";
+        mlarsson = mkHome "x86_64-linux" "mlarsson";
+      };
 
       devShells = forEachSupportedSystem (
         { pkgs }:
