@@ -13,41 +13,9 @@
     };
   };
 
-  outputs =
-    inputs@{
-      self,
-      nixpkgs,
-      nix-darwin,
-      home-manager,
-    }:
-    let
-      darwinHosts = builtins.attrNames (builtins.readDir ./darwinConfigurations);
-    in
-    {
-      darwinConfigurations = nixpkgs.lib.genAttrs darwinHosts (
-        darwinHost:
-        nix-darwin.lib.darwinSystem {
-          modules = [
-            home-manager.darwinModules.home-manager
-
-            {
-              nixpkgs.hostPlatform = "aarch64-darwin"; # TODO: Make this work on multiple systems
-              home-manager.useGlobalPkgs = true;
-              home-manager.useUserPackages = true;
-
-              # Set Git commit hash for darwin-version.
-              system.configurationRevision = self.rev or self.dirtyRev or null;
-
-              home-manager.users.maxlarsson = import ./home-configurations/maxlarsson/home.nix;
-            }
-
-            ./darwinConfigurations/${darwinHost}/configuration.nix
-          ];
-        }
-      );
-
-      homeConfigurations = import ./home-configurations inputs;
-
-      devShells = import ./dev-shells inputs;
-    };
+  outputs = inputs: {
+    darwinConfigurations = import ./darwin-configurations inputs;
+    homeConfigurations = import ./home-configurations inputs;
+    devShells = import ./dev-shells inputs;
+  };
 }
