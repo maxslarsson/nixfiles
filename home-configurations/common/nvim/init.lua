@@ -1,21 +1,30 @@
--- Set <space> as the leader key
-vim.g.mapleader = " "
-vim.g.maplocalleader = " "
+-- ============================================================
+-- FOUNDATION: options, keymaps, autocmds
+-- ============================================================
 
--- Show current line number on current line, and relative on every other
+-- Enable faster startup by caching compiled Lua modules
+vim.loader.enable()
+
+-- Set <space> as the leader key (must happen before plugins load)
+vim.g.mapleader = ' '
+vim.g.maplocalleader = ' '
+
+-- A Nerd Font is installed (nerd-fonts.jetbrains-mono) and selected in the terminal
+vim.g.have_nerd_font = true
+
+-- Show current line number on current line, relative on every other
 vim.o.number = true
 vim.o.relativenumber = true
 
 -- Enable mouse mode
-vim.o.mouse = "a"
+vim.o.mouse = 'a'
 
 -- Don't show the mode, since it's already in the status line
 vim.o.showmode = false
 
--- Sync clipboard between OS and Neovim.
--- Schedule the setting after `UiEnter` because it can increase startup-time.
+-- Sync clipboard between OS and Neovim (scheduled to not slow startup)
 vim.schedule(function()
-	vim.o.clipboard = "unnamedplus"
+  vim.o.clipboard = 'unnamedplus'
 end)
 
 -- Enable break indent
@@ -24,12 +33,12 @@ vim.o.breakindent = true
 -- Save undo history
 vim.o.undofile = true
 
--- Case-insensitive searching UNLESS \C or one or more capital letters in the search term
+-- Case-insensitive searching UNLESS \C or capital letters in the search term
 vim.o.ignorecase = true
 vim.o.smartcase = true
 
 -- Keep signcolumn on by default
-vim.o.signcolumn = "yes"
+vim.o.signcolumn = 'yes'
 
 -- Decrease update time
 vim.o.updatetime = 250
@@ -41,80 +50,154 @@ vim.o.timeoutlen = 300
 vim.o.splitright = true
 vim.o.splitbelow = true
 
--- Sets how neovim will display certain whitespace characters in the editor.
---
---  Notice listchars is set using `vim.opt` instead of `vim.o`.
---  It is very similar to `vim.o` but offers an interface for conveniently interacting with tables.
+-- Display certain whitespace characters
 vim.o.list = true
-vim.opt.listchars = { tab = "» ", trail = "·", nbsp = "␣" }
+vim.opt.listchars = { tab = '» ', trail = '·', nbsp = '␣' }
 
--- Preview substitutions live, as you type!
-vim.o.inccommand = "split"
+-- Preview substitutions live, as you type
+vim.o.inccommand = 'split'
 
 -- Show which line your cursor is on
 vim.o.cursorline = true
 
--- Minimal number of screen lines to keep above and below the cursor.
+-- Minimal number of screen lines to keep above and below the cursor
 vim.o.scrolloff = 10
 
--- if performing an operation that would fail due to unsaved changes in the buffer (like `:q`),
--- instead raise a dialog asking if you wish to save the current file(s)
+-- Raise a dialog on operations that would fail due to unsaved changes
 vim.o.confirm = true
 
 -- Clear highlights on search when pressing <Esc> in normal mode
-vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR>")
+vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
 
--- Diagnostic keymaps
-vim.keymap.set("n", "<leader>q", vim.diagnostic.setloclist, { desc = "Open diagnostic [Q]uickfix list" })
+-- Diagnostic config
+vim.diagnostic.config {
+  severity_sort = true,
+  update_in_insert = false,
+  float = { border = 'rounded', source = 'if_many' },
+  underline = { severity = vim.diagnostic.severity.ERROR },
+  signs = {
+    text = {
+      [vim.diagnostic.severity.ERROR] = '󰅚 ',
+      [vim.diagnostic.severity.WARN] = '󰀪 ',
+      [vim.diagnostic.severity.INFO] = '󰋽 ',
+      [vim.diagnostic.severity.HINT] = '󰌶 ',
+    },
+  },
+  virtual_text = {
+    source = 'if_many',
+    spacing = 2,
+    format = function(diagnostic)
+      local diagnostic_message = {
+        [vim.diagnostic.severity.ERROR] = diagnostic.message,
+        [vim.diagnostic.severity.WARN] = diagnostic.message,
+        [vim.diagnostic.severity.INFO] = diagnostic.message,
+        [vim.diagnostic.severity.HINT] = diagnostic.message,
+      }
+      return diagnostic_message[diagnostic.severity]
+    end,
+  },
+  -- Auto open the float when jumping with [d and ]d
+  jump = {
+    on_jump = function(_, bufnr)
+      vim.diagnostic.open_float { bufnr = bufnr, scope = 'cursor', focus = false }
+    end,
+  },
+}
 
--- Exit terminal mode in the builtin terminal with a shortcut that is a bit easier
--- for people to discover. Otherwise, you normally need to press <C-\><C-n>, which
--- is not what someone will guess without a bit more experience.
---
--- NOTE: This won't work in all terminal emulators/tmux/etc. Try your own mapping
--- or just use <C-\><C-n> to exit terminal mode
-vim.keymap.set("t", "<Esc><Esc>", "<C-\\><C-n>", { desc = "Exit terminal mode" })
+-- Diagnostic keymap
+vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix list' })
 
--- Keybinds to make split navigation easier.
---  Use CTRL+<hjkl> to switch between windows
-vim.keymap.set("n", "<C-h>", "<C-w><C-h>", { desc = "Move focus to the left window" })
-vim.keymap.set("n", "<C-l>", "<C-w><C-l>", { desc = "Move focus to the right window" })
-vim.keymap.set("n", "<C-j>", "<C-w><C-j>", { desc = "Move focus to the lower window" })
-vim.keymap.set("n", "<C-k>", "<C-w><C-k>", { desc = "Move focus to the upper window" })
+-- Exit terminal mode with an easier shortcut
+vim.keymap.set('t', '<Esc><Esc>', '<C-\\><C-n>', { desc = 'Exit terminal mode' })
 
--- NOTE: Some terminals have colliding keymaps or are not able to send distinct keycodes
--- vim.keymap.set("n", "<C-S-h>", "<C-w>H", { desc = "Move window to the left" })
--- vim.keymap.set("n", "<C-S-l>", "<C-w>L", { desc = "Move window to the right" })
--- vim.keymap.set("n", "<C-S-j>", "<C-w>J", { desc = "Move window to the lower" })
--- vim.keymap.set("n", "<C-S-k>", "<C-w>K", { desc = "Move window to the upper" })
+-- Keybinds to make split navigation easier
+vim.keymap.set('n', '<C-h>', '<C-w><C-h>', { desc = 'Move focus to the left window' })
+vim.keymap.set('n', '<C-l>', '<C-w><C-l>', { desc = 'Move focus to the right window' })
+vim.keymap.set('n', '<C-j>', '<C-w><C-j>', { desc = 'Move focus to the lower window' })
+vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper window' })
 
 -- Highlight when yanking (copying) text
-vim.api.nvim_create_autocmd("TextYankPost", {
-	desc = "Highlight when yanking (copying) text",
-	group = vim.api.nvim_create_augroup("kickstart-highlight-yank", { clear = true }),
-	callback = function()
-		vim.hl.on_yank()
-	end,
+vim.api.nvim_create_autocmd('TextYankPost', {
+  desc = 'Highlight when yanking (copying) text',
+  group = vim.api.nvim_create_augroup('kickstart-highlight-yank', { clear = true }),
+  callback = function()
+    vim.hl.on_yank()
+  end,
 })
 
--- Bootstrap lazy.nvim
-local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
-if not (vim.uv or vim.loop).fs_stat(lazypath) then
-  local lazyrepo = "https://github.com/folke/lazy.nvim.git"
-  local out = vim.fn.system({ "git", "clone", "--filter=blob:none", "--branch=stable", lazyrepo, lazypath })
-  if vim.v.shell_error ~= 0 then
-    vim.api.nvim_echo({
-      { "Failed to clone lazy.nvim:\n", "ErrorMsg" },
-      { out, "WarningMsg" },
-      { "\nPress any key to exit..." },
-    }, true, {})
-    vim.fn.getchar()
-    os.exit(1)
+-- ============================================================
+-- PLUGIN MANAGER: vim.pack build hooks
+-- ============================================================
+
+-- Run a build command for a plugin and report failures
+local function run_build(name, cmd, cwd)
+  local result = vim.system(cmd, { cwd = cwd }):wait()
+  if result.code ~= 0 then
+    local stderr = result.stderr or ''
+    local stdout = result.stdout or ''
+    local output = stderr ~= '' and stderr or stdout
+    if output == '' then
+      output = 'No output from build command.'
+    end
+    vim.notify(('Build failed for %s:\n%s'):format(name, output), vim.log.levels.ERROR)
   end
 end
-vim.opt.rtp:prepend(lazypath)
 
--- Setup lazy.nvim
-require("lazy").setup("plugins")
+-- Run build steps after a plugin is installed or updated
+vim.api.nvim_create_autocmd('PackChanged', {
+  callback = function(ev)
+    local name = ev.data.spec.name
+    local kind = ev.data.kind
+    if kind ~= 'install' and kind ~= 'update' then
+      return
+    end
+
+    if name == 'telescope-fzf-native.nvim' and vim.fn.executable 'make' == 1 then
+      run_build(name, { 'make' }, ev.data.path)
+      return
+    end
+
+    if name == 'LuaSnip' then
+      if vim.fn.has 'win32' ~= 1 and vim.fn.executable 'make' == 1 then
+        run_build(name, { 'make', 'install_jsregexp' }, ev.data.path)
+      end
+      return
+    end
+
+    if name == 'nvim-treesitter' then
+      if not ev.data.active then
+        vim.cmd.packadd 'nvim-treesitter'
+      end
+      vim.cmd 'TSUpdate'
+      return
+    end
+  end,
+})
+
+-- Install nvim-web-devicons once (Nerd Font icons); shared by telescope/neo-tree/statusline
+if vim.g.have_nerd_font then
+  vim.pack.add { 'https://github.com/nvim-tree/nvim-web-devicons' }
+end
+
+-- ============================================================
+-- PLUGINS
+-- ============================================================
+
+require 'plugins.gruvbox'
+require 'plugins.guess-indent'
+require 'plugins.gitsigns'
+-- require 'plugins.which-key'
+require 'plugins.todo-comments'
+require 'plugins.mini'
+-- require 'plugins.autopairs'
+-- require 'plugins.indent-line'
+-- require 'plugins.neo-tree'
+require 'plugins.telescope'
+require 'plugins.autocomplete'
+require 'plugins.lsp'
+require 'plugins.format'
+-- require 'plugins.lint'
+require 'plugins.treesitter'
+require 'plugins.debug'
 
 -- vim: ts=2 sts=2 sw=2 et

@@ -1,8 +1,3 @@
-return {
-  'ellisonleao/gruvbox.nvim',
-  priority = 1000, -- Make sure to load this before all the other start plugins.
-  config = function()
-    vim.cmd.colorscheme 'gruvbox'
-  end,
-}
-
+-- Gruvbox colorscheme
+vim.pack.add { 'https://github.com/ellisonleao/gruvbox.nvim' }
+vim.cmd.colorscheme 'gruvbox'
