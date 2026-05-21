@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, lib, pkgs, ... }:
 {
   # This value determines the Home Manager release that your configuration is
   # compatible with. This helps avoid breakage when a new Home Manager release
@@ -17,26 +17,6 @@
         recursive = true;
       };
 
-      # Configure the `tide` Fish prompt
-      "fish/conf.d/tide-overrides.fish".text = ''
-        # Time: show + 12-hour format
-        set -g tide_show_time yes
-        set -g tide_time_format '%I:%M'
-
-        # Lean prompt height: two lines
-        set -g tide_lean_prompt_height 2
-
-        # Prompt connection & spacing
-        set -g tide_prompt_connection disconnected
-        set -g tide_prompt_spacing compact
-
-        # Icons: few
-        set -g tide_prompt_icon_strategy few
-
-        # Transient prompt: off
-        set -g tide_left_prompt_transient no
-      '';
-
       "direnv/direnvrc".text = ''
         direnv_layout_dir() {
             local hash path
@@ -51,6 +31,26 @@
   home.file = {
     ".hushlogin".text = "";
   };
+
+  # Apply the Tide prompt config non-interactively on every rebuild.
+  # `tide` is a fish function (not a $PATH program) and activation runs in
+  # bash, so it must be invoked via `fish -c`. `--auto` writes every Tide
+  # universal variable. `TERM=dumb` keeps Tide's internal `clear` call quiet:
+  # activation has no real terminal, so otherwise `clear` errors noisily.
+  home.activation.configureTide = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+    run ${pkgs.fish}/bin/fish -c '
+      set -gx TERM dumb
+      tide configure --auto \
+        --style=Lean \
+        --prompt_colors="16 colors" \
+        --show_time=No \
+        --lean_prompt_height="Two lines" \
+        --prompt_connection=Disconnected \
+        --prompt_spacing=Compact \
+        --icons="Few icons" \
+        --transient=Yes
+    '
+  '';
 
   fonts.fontconfig.enable = true;
   home.packages = with pkgs; [
