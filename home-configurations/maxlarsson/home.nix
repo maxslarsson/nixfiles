@@ -13,8 +13,5 @@
     email = "maxslarsson@gmail.com";
   };
 
-  programs.ghostty = {
-    package = null; # TODO: Enable when ghostty can be built on Mac
-    settings.macos-titlebar-style = "hidden";
-  };
+  programs.ghostty.settings.macos-titlebar-style = "hidden";
 }

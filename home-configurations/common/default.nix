@@ -72,6 +72,7 @@
   programs = {
     ghostty = {
       enable = true;
+      package = null;
       enableFishIntegration = true;
       settings = {
         theme = "Gruvbox Dark";
