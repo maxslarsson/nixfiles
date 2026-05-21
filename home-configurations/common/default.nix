@@ -73,6 +73,7 @@
     ghostty = {
       enable = true;
       package = null;
+      systemd.enable = false;
       enableFishIntegration = true;
       settings = {
         theme = "Gruvbox Dark";
