@@ -1,7 +1,10 @@
 { nixpkgs, home-manager, ... }:
 {
   maxlarsson = home-manager.lib.homeManagerConfiguration {
-    pkgs = import nixpkgs { system = "aarch64-darwin"; };
+    pkgs = import nixpkgs {
+      system = "aarch64-darwin";
+      config.allowUnfree = true;
+    };
     modules = [ ./maxlarsson/home.nix ];
   };
 

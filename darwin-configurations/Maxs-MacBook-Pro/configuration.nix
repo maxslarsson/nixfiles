@@ -1,16 +1,26 @@
-{ config, ... }:
+{ config, inputs, ... }:
 {
   # Because I am using Determinate Nixd
   nix.enable = false;
   nixpkgs.config.allowUnfree = true;
+  nixpkgs.hostPlatform = "aarch64-darwin";
 
   # Used for backwards compatibility, read the changelog before changing
   system.stateVersion = 6;
+
+  # Set Git commit hash for darwin-version.
+  system.configurationRevision = inputs.self.rev or inputs.self.dirtyRev or null;
 
   system.primaryUser = "maxlarsson";
   users.users.maxlarsson = {
     name = "maxlarsson";
     home = "/Users/maxlarsson";
+  };
+
+  home-manager = {
+    useGlobalPkgs = true;
+    useUserPackages = true;
+    users.maxlarsson = import ../../home-configurations/maxlarsson/home.nix;
   };
 
   # Enable Touch ID authentication for sudo
