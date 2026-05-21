@@ -14,29 +14,13 @@
   };
 
   outputs =
-    {
+    inputs@{
       self,
       nixpkgs,
       nix-darwin,
       home-manager,
     }:
     let
-      supportedSystems = [
-        "x86_64-linux"
-        "aarch64-linux"
-        "x86_64-darwin"
-        "aarch64-darwin"
-      ];
-
-      forEachSupportedSystem =
-        f:
-        nixpkgs.lib.genAttrs supportedSystems (
-          system:
-          f {
-            pkgs = import nixpkgs { inherit system; };
-          }
-        );
-
       darwinHosts = builtins.attrNames (builtins.readDir ./darwinConfigurations);
 
       mkHome =
@@ -74,15 +58,6 @@
         mlarsson = mkHome "x86_64-linux" "mlarsson";
       };
 
-      devShells = forEachSupportedSystem (
-        { pkgs }:
-        {
-          default = pkgs.mkShell {
-            packages = with pkgs; [
-              lua-language-server
-            ];
-          };
-        }
-      );
+      devShells = import ./dev-shells inputs;
     };
 }
