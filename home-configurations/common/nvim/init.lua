@@ -196,7 +196,7 @@ require 'plugins.telescope'
 require 'plugins.autocomplete'
 require 'plugins.lsp'
 require 'plugins.format'
--- require 'plugins.lint'
+require 'plugins.lint'
 require 'plugins.treesitter'
 require 'plugins.debug'
 
