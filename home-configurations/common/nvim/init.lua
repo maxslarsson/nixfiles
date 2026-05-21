@@ -186,7 +186,7 @@ end
 require 'plugins.gruvbox'
 require 'plugins.guess-indent'
 require 'plugins.gitsigns'
--- require 'plugins.which-key'
+require 'plugins.which-key'
 require 'plugins.todo-comments'
 require 'plugins.mini'
 -- require 'plugins.autopairs'
