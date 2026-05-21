@@ -76,3 +76,8 @@ $RECYCLE.BIN/
 *.lnk
 
 # End of https://www.toptal.com/developers/gitignore/api/macos,linux,windows
+
+### Neovim ###
+# vim.pack writes this lockfile into the config dir at runtime. It must not be
+# tracked: Nix would symlink it read-only and break vim.pack updates.
+nvim-pack-lock.json
