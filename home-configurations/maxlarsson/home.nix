@@ -5,7 +5,11 @@
   home = {
     username = "maxlarsson";
     homeDirectory = "/Users/maxlarsson";
-    packages = [ pkgs.claude-code ];
+    packages = with pkgs; [
+      gh
+      claude-code
+      tealdeer
+    ];
   };
 
   programs.git.settings.user = {

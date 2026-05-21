@@ -65,11 +65,8 @@
 
     nerd-fonts.jetbrains-mono
 
-    gh
     tree
     htop
-    tealdeer
-    nodejs
     (python3.withPackages (
       python-pkgs: with python-pkgs; [
         ipython
