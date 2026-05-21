@@ -54,14 +54,13 @@
 
   fonts.fontconfig.enable = true;
   home.packages = with pkgs; [
-    nh
     nixd
     nixfmt
 
     nerd-fonts.jetbrains-mono
 
-    tealdeer
     gh
+    tealdeer
     nodejs
     (python3.withPackages (
       python-pkgs: with python-pkgs; [
