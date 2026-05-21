@@ -15,4 +15,13 @@ require('neo-tree').setup {
       },
     },
   },
+  -- Close neo-tree automatically after opening a file
+  event_handlers = {
+    {
+      event = 'file_opened',
+      handler = function()
+        require('neo-tree.command').execute { action = 'close' }
+      end,
+    },
+  },
 }
