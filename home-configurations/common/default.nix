@@ -63,16 +63,10 @@
     # system toolchain.
     stdenv.cc
 
-    nerd-fonts.jetbrains-mono
-
     tree
     htop
-    nodejs
-    (python3.withPackages (
-      python-pkgs: with python-pkgs; [
-        ipython
-      ]
-    ))
+
+    nerd-fonts.jetbrains-mono
   ];
 
   programs = {
