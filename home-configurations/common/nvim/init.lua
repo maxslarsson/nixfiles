@@ -27,6 +27,13 @@ vim.schedule(function()
   vim.o.clipboard = 'unnamedplus'
 end)
 
+-- Indentation: 2-space soft tabs. Neovim's built-in filetype plugins already
+-- override this per-language (e.g. Go/Make use tabs, Python/Rust/Zig use 4),
+-- and guess-indent.nvim overrides it per-buffer from a file's actual contents.
+vim.o.expandtab = true -- indent with spaces, never literal tab characters
+vim.o.shiftwidth = 2 -- width of one indent level (>>, <<, autoindent)
+vim.o.softtabstop = -1 -- make <Tab> in insert mode follow 'shiftwidth'
+
 -- Enable break indent
 vim.o.breakindent = true
 
@@ -196,8 +203,6 @@ require 'plugins.telescope'
 require 'plugins.autocomplete'
 require 'plugins.lsp'
 require 'plugins.format'
-require 'plugins.lint'
 require 'plugins.treesitter'
-require 'plugins.debug'
 
 -- vim: ts=2 sts=2 sw=2 et

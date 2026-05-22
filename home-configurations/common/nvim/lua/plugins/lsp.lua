@@ -74,6 +74,7 @@ local servers = {
   zls = {},
   ocamllsp = {},
   clangd = {},
+  cmake = {},
   gopls = {},
   basedpyright = {},
   rust_analyzer = {},
