@@ -1,4 +1,7 @@
 { pkgs, ... }:
+let
+  confluence-cli = pkgs.callPackage ./confluence-cli.nix { };
+in
 {
   imports = [ ../common ];
 
@@ -12,6 +15,7 @@
     ];
 
     packages = with pkgs; [
+      confluence-cli
       (python3.withPackages (
         ps: with ps; [
           ipython
