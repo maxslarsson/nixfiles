@@ -56,16 +56,11 @@
   home.packages = with pkgs; [
     nixd
     nixfmt
-    tree-sitter
-    # `tree-sitter build` compiles parsers from C/C++ source, so nvim-treesitter
-    # needs a compiler on PATH. `stdenv.cc` is the platform cc-wrapper (gcc on
-    # Linux, clang on macOS) — required on standalone home-manager hosts with no
-    # system toolchain.
-    stdenv.cc
 
     tio
     tree
     htop
+    tree-sitter
 
     nerd-fonts.jetbrains-mono
   ];
