@@ -63,6 +63,7 @@
     # system toolchain.
     stdenv.cc
 
+    tio
     tree
     htop
 
