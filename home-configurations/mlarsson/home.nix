@@ -15,6 +15,7 @@ in
     ];
 
     packages = with pkgs; [
+      nixos-rebuild-ng
       confluence-cli
       (python3.withPackages (
         ps: with ps; [

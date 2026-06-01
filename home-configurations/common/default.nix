@@ -9,6 +9,8 @@
   # release notes.
   home.stateVersion = "25.05"; # Please read the comment before changing.
 
+  news.display = "silent";
+
   xdg = {
     enable = true;
     configFile = {
@@ -60,7 +62,11 @@
     tio
     tree
     htop
+
+    gh
+    claude-code
     tree-sitter
+    tealdeer
 
     nerd-fonts.jetbrains-mono
   ];
@@ -156,10 +162,8 @@
       settings = {
         pull.rebase = true;
         rebase.autoStash = true;
-        rerere = {
-          enabled = true;
-          autoupdate = true; # Optional: automatically stage resolved conflicts
-        };
+        rerere.enabled = true;
+        merge.tool = "nvimdiff";
       };
 
       ignores = [

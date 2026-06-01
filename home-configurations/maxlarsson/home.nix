@@ -6,9 +6,6 @@
     username = "maxlarsson";
     homeDirectory = "/Users/maxlarsson";
     packages = with pkgs; [
-      gh
-      claude-code
-      tealdeer
       (python3.withPackages (ps: [ ps.ipython ]))
     ];
   };
