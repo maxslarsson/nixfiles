@@ -14,6 +14,9 @@ in
       "$HOME/.local/share/dx/bin"
     ];
 
+    # Bedrock requires this for auto permission mode to be available
+    sessionVariables.CLAUDE_CODE_ENABLE_AUTO_MODE = 1;
+
     packages = with pkgs; [
       nixos-rebuild-ng
       confluence-cli
