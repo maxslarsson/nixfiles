@@ -1,4 +1,9 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 {
   # This value determines the Home Manager release that your configuration is
   # compatible with. This helps avoid breakage when a new Home Manager release
@@ -58,6 +63,7 @@
   home.packages = with pkgs; [
     nixd
     nixfmt
+    nix-output-monitor
 
     tio
     tree
