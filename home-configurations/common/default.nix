@@ -170,6 +170,11 @@
         rebase.autoStash = true;
         rerere.enabled = true;
         merge.tool = "nvimdiff";
+
+        # Sign commits with an SSH key. user.signingkey is set in per-machine config
+        gpg.format = "ssh";
+        commit.gpgsign = true;
+        tag.gpgsign = true;
       };
 
       ignores = [
