@@ -71,6 +71,7 @@
 
     gh
     claude-code
+    codex
     tree-sitter
     tealdeer
 
