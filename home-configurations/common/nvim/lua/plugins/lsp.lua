@@ -71,6 +71,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
 -- Language servers. Completion capabilities are auto-registered by blink.cmp.
 ---@type table<string, vim.lsp.Config>
 local servers = {
+  texlab = {},
   zls = {},
   ocamllsp = {},
   clangd = {},
