@@ -73,6 +73,8 @@
     gh
     claude-code
     codex
+    gemini-cli-bin
+    nodejs
     tree-sitter
     tealdeer
 
