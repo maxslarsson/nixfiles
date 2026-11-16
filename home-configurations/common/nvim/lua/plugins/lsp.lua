@@ -80,6 +80,7 @@ local servers = {
   basedpyright = {},
   rust_analyzer = {},
   vtsls = {},
+  astro = {},
   lua_ls = {},
   nixd = {
     settings = {
