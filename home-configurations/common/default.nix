@@ -73,7 +73,7 @@
     gh
     claude-code
     codex
-    gemini-cli-bin
+    antigravity-cli
     nodejs
     tree-sitter
     tealdeer
