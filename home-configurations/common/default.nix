@@ -186,7 +186,7 @@
         ".envrc"
         ".DS_Store"
         "ehthumbs.db"
-        "Icon?"
+        "Icon\r\r"
         "Thumbs.db"
       ];
     };
