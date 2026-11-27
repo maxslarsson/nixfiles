@@ -3,7 +3,7 @@
   "extends": ["config:recommended"],
   "timezone": "America/New_York",
   "automerge": true,
-  "platformAutomerge": false,
+  "platformAutomerge": true,
   "nix": {
     "enabled": true,
     "lockFileMaintenance": {
