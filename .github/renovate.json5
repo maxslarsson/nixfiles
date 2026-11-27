@@ -1,15 +1,14 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": ["config:recommended"],
-  "enabledManagers": ["nix"],
   "timezone": "America/New_York",
+  "automerge": true,
+  "platformAutomerge": false,
   "nix": {
-    "enabled": true
-  },
-  "lockFileMaintenance": {
     "enabled": true,
-    "schedule": ["* 0-3 * * *"],
-    "automerge": true,
-    "platformAutomerge": false
+    "lockFileMaintenance": {
+      "enabled": true,
+      "schedule": ["* 0-3 * * *"]
+    }
   }
 }
