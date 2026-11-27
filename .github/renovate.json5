@@ -3,12 +3,11 @@
   "extends": ["config:recommended"],
   "timezone": "America/New_York",
   "automerge": true,
-  "platformAutomerge": true,
   "nix": {
     "enabled": true,
     "lockFileMaintenance": {
       "enabled": true,
-      "schedule": ["* 0-3 * * *"]
+      "schedule": ["after 8am and before 9am"]
     }
   }
 }
