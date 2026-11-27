@@ -1,0 +1,24 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    name: nix flake check (${{ matrix.runner }})
+    strategy:
+      matrix:
+        runner: [ubuntu-latest, macos-15]
+    runs-on: ${{ matrix.runner }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: Install Determinate Nix
+        uses: DeterminateSystems/determinate-nix-action@4b040423529d49b1a19ba918742e0aa9aa95031a # v3.24.3
+
+      - run: nix flake check --no-update-lock-file
