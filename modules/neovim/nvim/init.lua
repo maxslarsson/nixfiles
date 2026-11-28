@@ -88,19 +88,7 @@ vim.diagnostic.config {
       [vim.diagnostic.severity.HINT] = '󰌶 ',
     },
   },
-  virtual_text = {
-    source = 'if_many',
-    spacing = 2,
-    format = function(diagnostic)
-      local diagnostic_message = {
-        [vim.diagnostic.severity.ERROR] = diagnostic.message,
-        [vim.diagnostic.severity.WARN] = diagnostic.message,
-        [vim.diagnostic.severity.INFO] = diagnostic.message,
-        [vim.diagnostic.severity.HINT] = diagnostic.message,
-      }
-      return diagnostic_message[diagnostic.severity]
-    end,
-  },
+  virtual_text = { source = 'if_many', spacing = 2 },
   -- Auto open the float when jumping with [d and ]d
   jump = {
     on_jump = function(_, bufnr) vim.diagnostic.open_float { bufnr = bufnr, scope = 'cursor', focus = false } end,
