@@ -58,7 +58,7 @@ vim.keymap.set(
   { desc = '[S]earch [/] in Open Files' }
 )
 
-vim.keymap.set('n', '<leader>sn', function() builtin.find_files { cwd = vim.fn.stdpath 'config' } end, { desc = '[S]earch [N]eovim files' })
+vim.keymap.set('n', '<leader>sn', function() builtin.find_files { cwd = vim.fn.stdpath 'config', follow = true } end, { desc = '[S]earch [N]eovim files' })
 
 -- Telescope-backed LSP pickers, set when an LSP attaches to a buffer
 vim.api.nvim_create_autocmd('LspAttach', {
