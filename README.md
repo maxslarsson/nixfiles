@@ -9,6 +9,7 @@ Files are named by feature, not by configuration class. A feature contributes to
 - `flake.nix`: inputs, systems, and the flake-parts modules for `flake.modules`, `darwinConfigurations` and `homeConfigurations`
 - `modules/configurations.nix`: declares `configurations.darwin.<name>` and `configurations.home.<name>`, and generates `darwinConfigurations` and `homeConfigurations` from them
 - `modules/dev-shell.nix`: the dev shell for this repo
+- `modules/formatter.nix`: [treefmt-nix](https://github.com/numtide/treefmt-nix) config for `nix fmt` and its flake check
 - `modules/hosts/`: one file per machine (`macbook`), setting `configurations.darwin.<name>`
 - `modules/users/`: one file per home (`personal`, `work`), setting `configurations.home.<name>`, plus its system account on hosts that create one
 - everything else: features that feed the `base` modules
