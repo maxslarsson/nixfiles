@@ -1,6 +1,6 @@
-{ config, inputs, ... }:
+{ config, ... }:
 {
-  flake.modules.homeManager.maxlarsson =
+  flake.modules.homeManager.personal =
     { pkgs, ... }:
     {
       imports = [ config.flake.modules.homeManager.base ];
@@ -23,19 +23,16 @@
       programs.ghostty.settings.macos-titlebar-style = "hidden";
     };
 
-  flake.modules.darwin.maxlarsson = {
+  flake.modules.darwin.personal = {
     users.users.maxlarsson = {
       name = "maxlarsson";
       home = "/Users/maxlarsson";
     };
-    home-manager.users.maxlarsson = config.flake.modules.homeManager.maxlarsson;
+    home-manager.users.maxlarsson = config.flake.modules.homeManager.personal;
   };
 
-  flake.homeConfigurations.maxlarsson = inputs.home-manager.lib.homeManagerConfiguration {
-    pkgs = import inputs.nixpkgs {
-      system = "aarch64-darwin";
-      config.allowUnfree = true;
-    };
-    modules = [ config.flake.modules.homeManager.maxlarsson ];
+  configurations.home.personal = {
+    system = "aarch64-darwin";
+    module = config.flake.modules.homeManager.personal;
   };
 }

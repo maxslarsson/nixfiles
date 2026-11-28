@@ -1,13 +1,9 @@
 { config, inputs, ... }:
 {
-  flake.darwinConfigurations."Maxs-MacBook-Pro" = inputs.nix-darwin.lib.darwinSystem {
-    modules = [ config.flake.modules.darwin."Maxs-MacBook-Pro" ];
-  };
-
-  flake.modules.darwin."Maxs-MacBook-Pro" = {
+  configurations.darwin.macbook.module = {
     imports = with config.flake.modules.darwin; [
       base
-      maxlarsson
+      personal
     ];
 
     # Because I am using Determinate Nixd

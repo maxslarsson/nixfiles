@@ -23,16 +23,7 @@
           v = "nvim";
           gg = "lazygit";
         };
-        functions = {
-          mdcd = "mkdir -p $argv; and cd $argv[-1]";
-          update = ''
-            if type -q darwin-rebuild
-              sudo darwin-rebuild switch --flake $HOME/dev/nixfiles
-            else
-              home-manager switch --flake $HOME/dev/nixfiles
-            end
-          '';
-        };
+        functions.mdcd = "mkdir -p $argv; and cd $argv[-1]";
         plugins = with pkgs.fishPlugins; [
           # Gruvbox theme
           {

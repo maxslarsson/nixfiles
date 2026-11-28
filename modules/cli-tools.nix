@@ -23,6 +23,7 @@
         fd.enable = true;
         fzf.enable = true;
         bat.enable = true;
+        nh.enable = true;
       };
     };
 }

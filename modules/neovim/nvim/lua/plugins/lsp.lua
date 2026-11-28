@@ -96,10 +96,10 @@ local servers = {
           --   expr = '(builtins.getFlake ("git+file://" + toString ./.)).nixosConfigurations.k-on.options',
           -- },
           nix_darwin = {
-            expr = '(builtins.getFlake ("git+file://" + toString ./.)).darwinConfigurations."Maxs-MacBook-Pro".options',
+            expr = '(builtins.getFlake ("git+file://" + toString ./.)).darwinConfigurations.macbook.options',
           },
           home_manager = {
-            expr = '(builtins.getFlake ("git+file://" + toString ./.)).homeConfigurations."maxlarsson".options',
+            expr = '(builtins.getFlake ("git+file://" + toString ./.)).homeConfigurations.personal.options',
           },
         },
       },
