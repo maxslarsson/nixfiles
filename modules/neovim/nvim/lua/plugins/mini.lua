@@ -1,6 +1,12 @@
 -- Collection of small independent plugins/modules
 vim.pack.add { 'https://github.com/nvim-mini/mini.nvim' }
 
+-- Nerd Font icons; the mock serves plugins that expect nvim-web-devicons (telescope, neo-tree)
+if vim.g.have_nerd_font then
+  require('mini.icons').setup()
+  MiniIcons.mock_nvim_web_devicons()
+end
+
 -- Better Around/Inside textobjects
 --  - va)  - [V]isually select [A]round [)]paren
 --  - yinq - [Y]ank [I]nside [N]ext [Q]uote

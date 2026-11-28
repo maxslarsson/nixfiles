@@ -167,9 +167,6 @@ vim.api.nvim_create_autocmd('PackChanged', {
   end,
 })
 
--- Install nvim-web-devicons once (Nerd Font icons); shared by telescope/neo-tree/statusline
-if vim.g.have_nerd_font then vim.pack.add { 'https://github.com/nvim-tree/nvim-web-devicons' } end
-
 -- ============================================================
 -- PLUGINS
 -- ============================================================
