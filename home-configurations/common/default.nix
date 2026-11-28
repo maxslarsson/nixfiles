@@ -37,7 +37,6 @@
 
   home.file = {
     ".hushlogin".text = "";
-    ".claude/CLAUDE.md".source = ./CLAUDE.md;
   };
 
   # Apply the Tide prompt config non-interactively on every rebuild.
