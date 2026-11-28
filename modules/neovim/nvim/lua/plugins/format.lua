@@ -22,8 +22,6 @@ vim.keymap.set('', '<leader>f', function()
     -- The formatter may have rewritten the indentation (e.g. 4-space to
     -- 2-space), leaving the load-time guess stale. Re-detect so further
     -- edits use the formatted file's actual style.
-    if not err then
-      require('guess-indent').set_from_buffer(bufnr, true, true)
-    end
+    if not err then require('guess-indent').set_from_buffer(bufnr, true, true) end
   end)
 end, { desc = '[F]ormat buffer' })
