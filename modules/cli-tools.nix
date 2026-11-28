@@ -8,10 +8,12 @@
         htop
         nodejs
         tealdeer
+        (python3.withPackages (ps: [ ps.ipython ]))
 
         nixd
         nixfmt
         nix-output-monitor
+        nixos-rebuild-ng
 
         claude-code
         codex

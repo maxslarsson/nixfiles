@@ -1,27 +1,22 @@
 { config, ... }:
 {
-  flake.modules.homeManager.personal =
-    { pkgs, ... }:
-    {
-      imports = [ config.flake.modules.homeManager.base ];
+  flake.modules.homeManager.personal = {
+    imports = [ config.flake.modules.homeManager.base ];
 
-      home = {
-        # Read the Home Manager release notes before changing
-        stateVersion = "25.05";
-        username = "maxlarsson";
-        homeDirectory = "/Users/maxlarsson";
-        packages = with pkgs; [
-          (python3.withPackages (ps: [ ps.ipython ]))
-        ];
-      };
-
-      programs.git.settings.user = {
-        name = "Max Larsson";
-        email = "maxslarsson@gmail.com";
-      };
-
-      programs.ghostty.settings.macos-titlebar-style = "hidden";
+    home = {
+      # Read the Home Manager release notes before changing
+      stateVersion = "25.05";
+      username = "maxlarsson";
+      homeDirectory = "/Users/maxlarsson";
     };
+
+    programs.git.settings.user = {
+      name = "Max Larsson";
+      email = "maxslarsson@gmail.com";
+    };
+
+    programs.ghostty.settings.macos-titlebar-style = "hidden";
+  };
 
   flake.modules.darwin.personal = {
     users.users.maxlarsson = {
