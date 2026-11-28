@@ -1,0 +1,31 @@
+name: Update flake.lock
+
+on:
+  schedule:
+    - cron: "0 8 * * *"
+      timezone: "America/New_York"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: Install Determinate Nix
+        uses: DeterminateSystems/determinate-nix-action@4b040423529d49b1a19ba918742e0aa9aa95031a # v3.24.3
+
+      # A PAT rather than GITHUB_TOKEN, so the PR triggers check.yml.
+      - id: update
+        uses: DeterminateSystems/update-flake-lock@da03c0f078bc4b2c37ee4f7e072d34bf8f188bb3 # v29
+        with:
+          token: ${{ secrets.GH_TOKEN_FOR_UPDATES }}
+
+      # Auto-merge only waits for checks that branch protection on main requires.
+      - if: steps.update.outputs.pull-request-number
+        env:
+          GH_TOKEN: ${{ secrets.GH_TOKEN_FOR_UPDATES }}
+        run: gh pr merge ${{ steps.update.outputs.pull-request-number }} --auto --rebase

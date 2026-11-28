@@ -18,4 +18,9 @@ jobs:
       - name: Install Determinate Nix
         uses: DeterminateSystems/determinate-nix-action@4b040423529d49b1a19ba918742e0aa9aa95031a # v3.24.3
 
+      - uses: DeterminateSystems/flake-checker-action@786422608c7bded2bbc9741ad9f91356842bf520 # v14
+        with:
+          fail-mode: true
+          send-statistics: false
+
       - run: nix flake check --all-systems --no-update-lock-file
