@@ -5,6 +5,11 @@
   ...
 }:
 {
+  imports = [
+    inputs.nix-darwin.flakeModules.default
+    inputs.home-manager.flakeModules.default
+  ];
+
   options.configurations = {
     darwin = lib.mkOption {
       type = lib.types.lazyAttrsOf (

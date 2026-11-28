@@ -27,8 +27,6 @@
     inputs.flake-parts.lib.mkFlake { inherit inputs; } {
       imports = [
         inputs.flake-parts.flakeModules.modules
-        inputs.nix-darwin.flakeModules.default
-        inputs.home-manager.flakeModules.default
         (inputs.import-tree ./modules)
       ];
 
