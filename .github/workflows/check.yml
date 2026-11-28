@@ -23,4 +23,5 @@ jobs:
           fail-mode: true
           send-statistics: false
 
-      - run: nix flake check --all-systems --no-update-lock-file
+      - run: nix flake check --all-systems --no-build --no-update-lock-file
+      - run: nix flake check --no-update-lock-file

@@ -2,13 +2,14 @@
 
 A [dendritic](https://github.com/mightyiam/dendritic) flake. Every `.nix` file under `modules/` is a [flake-parts](https://flake.parts) module, loaded by [import-tree](https://github.com/denful/import-tree) (paths containing `/_` are skipped).
 
-Files are named by feature, not by configuration class. A feature contributes to every class it touches, e.g. `shell.nix` sets `flake.modules.darwin.base` and `flake.modules.homeManager.base`.
+Files are named by feature, not by configuration class. A feature contributes to every class it touches, e.g. `shell.nix` sets `flake.modules.darwin.base` and `flake.modules.homeManager.base`. A feature that needs a flake-parts module imports it itself, e.g. `formatter.nix` imports treefmt-nix's.
 
 ### Layout
 
-- `flake.nix`: inputs, systems, and the flake-parts modules for `flake.modules`, `darwinConfigurations` and `homeConfigurations`
-- `modules/configurations.nix`: declares `configurations.darwin.<name>` and `configurations.home.<name>`, and generates `darwinConfigurations` and `homeConfigurations` from them
+- `flake.nix`: inputs, systems, and the flake-parts module for `flake.modules`
+- `modules/configurations.nix`: declares `configurations.darwin.<name>` and `configurations.home.<name>`, and generates `darwinConfigurations` and `homeConfigurations` from them (importing the nix-darwin and home-manager flake-parts modules)
 - `modules/dev-shell.nix`: the dev shell for this repo
+- `modules/formatter.nix`: [treefmt-nix](https://github.com/numtide/treefmt-nix) config for `nix fmt` and its flake check
 - `modules/hosts/`: one file per machine (`macbook`), setting `configurations.darwin.<name>`
 - `modules/users/`: one file per home (`personal`, `work`), setting `configurations.home.<name>`, plus its system account on hosts that create one
 - everything else: features that feed the `base` modules
