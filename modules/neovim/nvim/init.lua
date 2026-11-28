@@ -130,39 +130,18 @@ vim.api.nvim_create_autocmd('TextYankPost', {
 -- PLUGIN MANAGER: vim.pack build hooks
 -- ============================================================
 
--- Run a build command for a plugin and report failures
-local function run_build(name, cmd, cwd)
-  local result = vim.system(cmd, { cwd = cwd }):wait()
-  if result.code ~= 0 then
-    local stderr = result.stderr or ''
-    local stdout = result.stdout or ''
-    local output = stderr ~= '' and stderr or stdout
-    if output == '' then output = 'No output from build command.' end
-    vim.notify(('Build failed for %s:\n%s'):format(name, output), vim.log.levels.ERROR)
-  end
-end
-
 -- Run build steps after a plugin is installed or updated
 vim.api.nvim_create_autocmd('PackChanged', {
   callback = function(ev)
-    local name = ev.data.spec.name
-    local kind = ev.data.kind
+    local name, kind = ev.data.spec.name, ev.data.kind
     if kind ~= 'install' and kind ~= 'update' then return end
 
     if name == 'telescope-fzf-native.nvim' and vim.fn.executable 'make' == 1 then
-      run_build(name, { 'make' }, ev.data.path)
-      return
-    end
-
-    if name == 'LuaSnip' then
-      if vim.fn.has 'win32' ~= 1 and vim.fn.executable 'make' == 1 then run_build(name, { 'make', 'install_jsregexp' }, ev.data.path) end
-      return
-    end
-
-    if name == 'nvim-treesitter' then
+      local result = vim.system({ 'make' }, { cwd = ev.data.path }):wait()
+      if result.code ~= 0 then vim.notify('Build failed for telescope-fzf-native.nvim:\n' .. result.stderr, vim.log.levels.ERROR) end
+    elseif name == 'nvim-treesitter' then
       if not ev.data.active then vim.cmd.packadd 'nvim-treesitter' end
       vim.cmd 'TSUpdate'
-      return
     end
   end,
 })
