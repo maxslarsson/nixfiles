@@ -1,7 +1,4 @@
 { pkgs, ... }:
-let
-  confluence-cli = pkgs.callPackage ./confluence-cli.nix { };
-in
 {
   imports = [ ../common ];
 
@@ -19,7 +16,6 @@ in
 
     packages = with pkgs; [
       nixos-rebuild-ng
-      confluence-cli
       (python3.withPackages (
         ps: with ps; [
           ipython
