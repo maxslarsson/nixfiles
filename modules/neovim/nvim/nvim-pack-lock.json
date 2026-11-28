@@ -1,10 +1,5 @@
 {
   "plugins": {
-    "LuaSnip": {
-      "rev": "642b0c595e11608b4c18219e93b88d7637af27bc",
-      "src": "https://github.com/L3MON4D3/LuaSnip",
-      "version": "2.0.0 - 3.0.0"
-    },
     "blink.cmp": {
       "rev": "78336bc89ee5365633bcf754d93df01678b5c08f",
       "src": "https://github.com/saghen/blink.cmp",
@@ -18,10 +13,6 @@
       "rev": "889e2e96edef4e144965571d46f7a77bcc4d0ddf",
       "src": "https://github.com/j-hui/fidget.nvim"
     },
-    "friendly-snippets": {
-      "rev": "6cd7280adead7f586db6fccbd15d2cac7e2188b9",
-      "src": "https://github.com/rafamadriz/friendly-snippets"
-    },
     "gitsigns.nvim": {
       "rev": "dd3f588bacbeb041be6facf1742e42097f62165d",
       "src": "https://github.com/lewis6991/gitsigns.nvim"
@@ -33,10 +24,6 @@
     "guess-indent.nvim": {
       "rev": "84a4987ff36798c2fc1169cbaff67960aed9776f",
       "src": "https://github.com/NMAC427/guess-indent.nvim"
-    },
-    "indent-blankline.nvim": {
-      "rev": "d28a3f70721c79e3c5f6693057ae929f3d9c0a03",
-      "src": "https://github.com/lukas-reineke/indent-blankline.nvim"
     },
     "lazydev.nvim": {
       "rev": "ff2cbcba459b637ec3fd165a2be59b7bbaeedf0d",
@@ -67,10 +54,6 @@
       "rev": "4916d6592ede8c07973490d9322f187e07dfefac",
       "src": "https://github.com/nvim-treesitter/nvim-treesitter",
       "version": "'main'"
-    },
-    "nvim-web-devicons": {
-      "rev": "7d8dad2c837fcdf2e65997e68657c1a21c568074",
-      "src": "https://github.com/nvim-tree/nvim-web-devicons"
     },
     "plenary.nvim": {
       "rev": "74b06c6c75e4eeb3108ec01852001636d85a932b",

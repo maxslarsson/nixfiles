@@ -1,16 +1,5 @@
--- Autocompletion and snippets
+-- Autocompletion; LSP snippets expand with the built-in vim.snippet
 
--- Snippet engine
-vim.pack.add {
-  { src = 'https://github.com/L3MON4D3/LuaSnip', version = vim.version.range '2.*' },
-}
-require('luasnip').setup {}
-
--- friendly-snippets: a collection of premade snippets, loaded into LuaSnip
-vim.pack.add { 'https://github.com/rafamadriz/friendly-snippets' }
-require('luasnip.loaders.from_vscode').lazy_load()
-
--- Completion engine
 vim.pack.add {
   { src = 'https://github.com/saghen/blink.cmp', version = vim.version.range '1.*' },
 }
@@ -26,13 +15,11 @@ require('blink.cmp').setup {
   },
 
   sources = {
-    default = { 'lsp', 'path', 'snippets', 'lazydev' },
+    default = { 'lsp', 'path', 'lazydev' },
     providers = {
       lazydev = { module = 'lazydev.integrations.blink', score_offset = 100 },
     },
   },
-
-  snippets = { preset = 'luasnip' },
 
   -- Use the Lua fuzzy matcher (no prebuilt binary download)
   fuzzy = { implementation = 'lua' },

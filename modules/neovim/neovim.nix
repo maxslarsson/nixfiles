@@ -12,7 +12,7 @@
         withRuby = false;
         # init.lua can't be written into the out-of-store link below
         sideloadInitLua = true;
-        # telescope-fzf-native and LuaSnip build with make; nvim-treesitter compiles parsers with cc
+        # The tree-sitter CLI calls cc to compile parsers; telescope-fzf-native builds with make
         extraPackages = with pkgs; [
           stdenv.cc
           gnumake

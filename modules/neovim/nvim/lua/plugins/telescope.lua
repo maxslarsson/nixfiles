@@ -1,13 +1,11 @@
 -- Fuzzy finder (files, lsp, etc)
 
-local telescope_plugins = {
+vim.pack.add {
   'https://github.com/nvim-lua/plenary.nvim',
   'https://github.com/nvim-telescope/telescope.nvim',
   'https://github.com/nvim-telescope/telescope-ui-select.nvim',
+  'https://github.com/nvim-telescope/telescope-fzf-native.nvim',
 }
--- telescope-fzf-native needs `make`; build is run by the PackChanged hook in init.lua
-if vim.fn.executable 'make' == 1 then table.insert(telescope_plugins, 'https://github.com/nvim-telescope/telescope-fzf-native.nvim') end
-vim.pack.add(telescope_plugins)
 
 require('telescope').setup {
   extensions = {
@@ -17,7 +15,6 @@ require('telescope').setup {
   },
 }
 
--- Enable Telescope extensions if they are installed
 pcall(require('telescope').load_extension, 'fzf')
 pcall(require('telescope').load_extension, 'ui-select')
 
@@ -58,7 +55,7 @@ vim.keymap.set(
   { desc = '[S]earch [/] in Open Files' }
 )
 
-vim.keymap.set('n', '<leader>sn', function() builtin.find_files { cwd = vim.fn.stdpath 'config' } end, { desc = '[S]earch [N]eovim files' })
+vim.keymap.set('n', '<leader>sn', function() builtin.find_files { cwd = vim.fn.stdpath 'config', follow = true } end, { desc = '[S]earch [N]eovim files' })
 
 -- Telescope-backed LSP pickers, set when an LSP attaches to a buffer
 vim.api.nvim_create_autocmd('LspAttach', {

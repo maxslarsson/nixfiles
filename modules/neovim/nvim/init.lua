@@ -79,7 +79,7 @@ vim.diagnostic.config {
   severity_sort = true,
   update_in_insert = false,
   float = { border = 'rounded', source = 'if_many' },
-  underline = { severity = vim.diagnostic.severity.ERROR },
+  underline = { severity = { min = vim.diagnostic.severity.WARN } },
   signs = {
     text = {
       [vim.diagnostic.severity.ERROR] = '󰅚 ',
@@ -88,19 +88,7 @@ vim.diagnostic.config {
       [vim.diagnostic.severity.HINT] = '󰌶 ',
     },
   },
-  virtual_text = {
-    source = 'if_many',
-    spacing = 2,
-    format = function(diagnostic)
-      local diagnostic_message = {
-        [vim.diagnostic.severity.ERROR] = diagnostic.message,
-        [vim.diagnostic.severity.WARN] = diagnostic.message,
-        [vim.diagnostic.severity.INFO] = diagnostic.message,
-        [vim.diagnostic.severity.HINT] = diagnostic.message,
-      }
-      return diagnostic_message[diagnostic.severity]
-    end,
-  },
+  virtual_text = { source = 'if_many', spacing = 2 },
   -- Auto open the float when jumping with [d and ]d
   jump = {
     on_jump = function(_, bufnr) vim.diagnostic.open_float { bufnr = bufnr, scope = 'cursor', focus = false } end,
@@ -130,45 +118,21 @@ vim.api.nvim_create_autocmd('TextYankPost', {
 -- PLUGIN MANAGER: vim.pack build hooks
 -- ============================================================
 
--- Run a build command for a plugin and report failures
-local function run_build(name, cmd, cwd)
-  local result = vim.system(cmd, { cwd = cwd }):wait()
-  if result.code ~= 0 then
-    local stderr = result.stderr or ''
-    local stdout = result.stdout or ''
-    local output = stderr ~= '' and stderr or stdout
-    if output == '' then output = 'No output from build command.' end
-    vim.notify(('Build failed for %s:\n%s'):format(name, output), vim.log.levels.ERROR)
-  end
-end
-
 -- Run build steps after a plugin is installed or updated
 vim.api.nvim_create_autocmd('PackChanged', {
   callback = function(ev)
-    local name = ev.data.spec.name
-    local kind = ev.data.kind
+    local name, kind = ev.data.spec.name, ev.data.kind
     if kind ~= 'install' and kind ~= 'update' then return end
 
-    if name == 'telescope-fzf-native.nvim' and vim.fn.executable 'make' == 1 then
-      run_build(name, { 'make' }, ev.data.path)
-      return
-    end
-
-    if name == 'LuaSnip' then
-      if vim.fn.has 'win32' ~= 1 and vim.fn.executable 'make' == 1 then run_build(name, { 'make', 'install_jsregexp' }, ev.data.path) end
-      return
-    end
-
-    if name == 'nvim-treesitter' then
+    if name == 'telescope-fzf-native.nvim' then
+      local result = vim.system({ 'make' }, { cwd = ev.data.path }):wait()
+      if result.code ~= 0 then vim.notify('Build failed for telescope-fzf-native.nvim:\n' .. result.stderr, vim.log.levels.ERROR) end
+    elseif name == 'nvim-treesitter' then
       if not ev.data.active then vim.cmd.packadd 'nvim-treesitter' end
       vim.cmd 'TSUpdate'
-      return
     end
   end,
 })
-
--- Install nvim-web-devicons once (Nerd Font icons); shared by telescope/neo-tree/statusline
-if vim.g.have_nerd_font then vim.pack.add { 'https://github.com/nvim-tree/nvim-web-devicons' } end
 
 -- ============================================================
 -- PLUGINS
@@ -181,7 +145,6 @@ require 'plugins.which-key'
 require 'plugins.todo-comments'
 require 'plugins.mini'
 require 'plugins.autopairs'
-require 'plugins.indent-line'
 require 'plugins.neo-tree'
 require 'plugins.telescope'
 require 'plugins.autocomplete'
