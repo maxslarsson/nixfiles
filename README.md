@@ -13,6 +13,8 @@ Files are named by feature, not by configuration class. A feature contributes to
 - `modules/users/`: one file per home (`personal`, `work`), setting `configurations.home.<name>`, plus its system account on hosts that create one
 - everything else: features that feed the `base` modules
 
+The repo must be cloned to `~/dev/nixfiles`: `~/.config/nvim` links to `modules/neovim/nvim` in the checkout, so config edits apply without a rebuild.
+
 ### Applying
 
 ```sh

@@ -30,10 +30,6 @@
                 cryptography
               ]
             ))
-
-            # Ubuntu does not ship with these by default
-            stdenv.cc
-            gnumake
           ];
         };
       };
